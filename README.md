@@ -99,6 +99,22 @@ the Base-workspace and Ubuntu-workspace.
 docker run --name space-1 -d -p 8020-8035:8020-8035 -p 9000:9000 alnoda/ansible-terraform-workspace
 ```
 
+### [`Redis-Workspace`](./workspaces/redis-workspace/README.md) 
+Docker image with Redis, and many other tools that make development with Redis much more convenient. Substitute 
+in your development docker-compose.yaml file standard redis image with this one, add port-mapping -p 8020-8035:8020-8035. 
+Now in addition to Redis, you've got a whole set of tools with UIs, that allow you to explore you Redis database, get and set keys, 
+import datasets, install Redis modules and more.
+
+```
+docker run --name rwid-1 -d -p 8020-8035:8020-8035 alnoda/redis-workspace
+```
+
+### [`Kafka-Workspace`](./workspaces/kafka-workspace/README.md) 
+Docker image with Kafka, and some other tools to improve Kafka development experience.
+```
+docker run --name rwid-1 -d -p 8020-8035:8020-8035 alnoda/kafka-workspace
+```
+
 ### [`MkDocs-MagicSpace`](./workspaces/mkdocs-magicspace/README.md) 
 All-in-one tool, carefully crafted to develop, build and serve awesome static websites, for the purpose 
 of documentation, tutorials, and training. Has all the features of the Base-workspace and Ubuntu-workspace.
@@ -224,6 +240,8 @@ base workspace to build upon, but it has a different VS-Code version - [Codeserv
 
 - [The way I use Docker as interactive environment for tries and experiments](https://medium.com/@bluxmit/the-way-i-use-docker-as-interactive-environment-for-tries-and-experiments-52ac06c0ec69)
 - [Docker as a lightweight VM - docker image that you can use as VM substitute](https://medium.com/@bluxmit/docker-as-a-lightweight-vm-docker-image-that-you-can-use-as-vm-substitute-164032e4ed0b)
+- [The better development experience with Kafka](https://medium.com/@bluxmit/the-better-development-experience-with-kafka-54f15705a8ee)
+- [Improve development experience with Redis](https://medium.com/@bluxmit/improve-development-experience-with-redis-96d14ef473ae)
 
 ## Feedback and contribution
 

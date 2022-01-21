@@ -73,6 +73,24 @@
             "description": "Browse, upload and download files and folders to and from the Workspace"
         },
         {
+            "env": "ANSIBLE_ARA",
+            "name": "Ansible Ara",
+            "image": "Ara.png",
+            "description": "Monitor for all Ansible plays"
+        },
+        {
+            "env": "TERRAFORM_ROVER",
+            "name": "Terraform Rover",
+            "image": "Terraform-Rover.png",
+            "description": "Not started! Start manually with your Terraform project dir, i.e.  <b>cd /home/examples/terraform-scaleway/; terraform init; rover --workingDir /home/examples/terraform-scaleway/</b>"
+        },
+        {
+            "env": "BLAST_RADIUS",
+            "name": "Blast Radius",
+            "image": "Blast-radius.png",
+            "description": "Not started! Start manually with your Terraform project dir, i.e.  <b>cd /home/examples/terraform-scaleway; terraform init; blast-radius --serve --port 8030</b>"
+        },
+        {
             "env": "CRONICLE_URL",
             "name": "Cronicle",
             "image": "Cronicle.jpg",
@@ -101,12 +119,6 @@
             "name": "Process monitor",
             "image": "Htop.jpg",
             "description": "Monitor running process and resource utilization"
-        },
-        {
-            "env": "ANSIBLE_ARA",
-            "name": "Ansible Ara",
-            "image": "Ara.png",
-            "description": "Monitor for all Ansible plays"
         }
         ] 
 %}
