@@ -1,6 +1,10 @@
-# Redis workspace
+<p align="center">
+  <img src="https://github.com/bluxmit/alnoda-workspaces/blob/main/img/Alnoda-white.svg" alt="Alnoda logo" width="150">
+</p> 
 
-Docker image with Redis, and many other tools that make development with Redis much more convenient.  
+# Redis workspace
+Docker image with Redis, Redis Commander and other Redis CLI tools. Can be used to manage cloud Redis deployments, 
+or as Redis docker image with batteries included for local development.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/bluxmit/alnoda-workspaces/main/workspaces/redis-workspace/img/redis-wid-collage.png" alt="Collage">

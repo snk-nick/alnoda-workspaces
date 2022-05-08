@@ -1,7 +1,10 @@
-# Ubuntu-workspace
+<p align="center">
+  <img src="https://github.com/bluxmit/alnoda-workspaces/blob/main/img/Alnoda-white.svg" alt="Alnoda logo" width="150">
+</p> 
 
-Use docker as a lightweight Virtual Machine. Provides isolation of environments, 
-and requires less resources than VMs. Run locally or on a cloud server (with HTTPS and auth).  
+# Ubuntu-workspace
+Docker as a "light-weight Virtual Machine". Get an isolated Ubuntu environment for development, testing or experimentation 
+that requires less resources than VM.
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/bluxmit/alnoda-workspaces/main/workspaces/ubuntu-workspace/img/ubuntu-wid-collage.png" alt="Collage">
@@ -595,5 +598,16 @@ docker run --name space-4 -d -p 19011:19011 space-image:0.4
 The application is running and can be accessed on localhost:19011   
 It will be running even if you stop the container, or commit it and create new images
 
-##### Potential features
+### Candidates
+- [Fig](https://github.com/withfig/autocomplete). adds autocomplete to the terminal.
+- [spacemacs](https://www.spacemacs.org/)
 - [hyper](https://github.com/vercel/hyper)
+- [xplr](https://github.com/sayanarijit/xplr)
+- [vizex](https://github.com/bexxmodd/vizex)
+- [lazygit](https://github.com/jesseduffield/lazygit)
+- [gitui](https://github.com/extrawurst/gitui)
+- [bashtop](https://github.com/aristocratos/bashtop)
+- [amp](https://github.com/jmacdonald/amp)
+- [fff](https://github.com/dylanaraps/fff)
+- [slap](https://github.com/slap-editor/slap)
+- [glow](https://github.com/charmbracelet/glow)

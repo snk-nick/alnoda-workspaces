@@ -1,10 +1,13 @@
-# Python workspace 
+<p align="center">
+  <img src="https://github.com/bluxmit/alnoda-workspaces/blob/main/img/Alnoda-white.svg" alt="Alnoda logo" width="150">
+</p> 
 
-Python development environment inside the isolated docker container. Includes VS-code IDE, 
-job scheduler and other tools for linting, testing, auto-documentation and profiling. 
+# Python workspace 
+General purpose python development environment with a focus on 
+linting, testing, auto-documentation, performance and profiling. 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/bluxmit/alnoda-workspaces/main/workspaces/python-workspace/img/python-wid-collage.png" alt="Collage">
+  <img src="https://raw.githubusercontent.com/bluxmit/alnoda-workspaces/main/workspaces/python-workspace/img/python-wid-collage-sm.jpg" alt="Collage">
 </p>
 
 Try it out
