@@ -1,25 +1,22 @@
 ARG docker_registry=docker.io/alnoda
-ARG image_tag=18.04-1.0
+ARG image_tag=2.2
 
-FROM ${docker_registry}/workspace-in-docker:${image_tag}
+FROM ${docker_registry}/ide-workspace:${image_tag}
 
 USER root
 
 COPY python-requirements.txt /home/abc/installed-python-packages
-COPY ./mkdocs/mkdocs.yml /home/docs/mkdocs.yml
 COPY ./examples/ /home/examples/
 COPY .pylintrc /home/abc/
+
+COPY ./mkdocs/mkdocs.yml /home/docs/mkdocs.yml
 
 RUN pip install -r /home/abc/installed-python-packages/python-requirements.txt \
     && echo "------------------------------------------------------ graphviz" \
     && apt-get update \
     && apt-get install -y graphviz \
-    && apt-get install -y python-pydot python-pydot-ng \
+    && apt-get install -y python3-pydotplus \
     && echo "------------------------------------------------------ utils" \
-    && rm -rf /home/abc/utils || true \
-    && git clone https://github.com/bluxmit/alnoda-workspaces /tmp/alnoda-workspaces \
-    && mv /tmp/alnoda-workspaces/utils /home/abc/ \
-    && rm -rf /tmp/alnoda-workspaces \
     && echo "alias python-report='/home/abc/utils/python-report.sh'" >> /home/abc/.zshrc \
     && chmod +x /home/abc/utils/python-report.sh && chown abc /home/abc/utils/python-report.sh \
     && echo "------------------------------------------------------ user" \

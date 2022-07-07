@@ -3,18 +3,18 @@
 # ===========================================================
 
 nav:
-  - Home: pages/home/home.md
-  - About: README.md
-  - Docs: docs.md
+  - Home: README.md
+  - My apps: pages/my-apps.md
+  - Docs: https://docs.alnoda.org/postgres-workspace/
 
 
 # ===========================================================
 # CONFIGURATION
 # ===========================================================
 
-site_name: My Workspace
+site_name: Postgres workspace
 repo_url: https://github.com/bluxmit/alnoda-workspaces
-site_url: https://alnoda.org
+site_url: https://docs.alnoda.org
 edit_uri: ""
 
 # ===========================================================
@@ -35,19 +35,19 @@ theme:
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to light mode
-      primary: red  
-      accent: deep orange
+      primary: indigo  
+      accent: blue
     - scheme: slate
       toggle:
         icon: material/toggle-switch
         name: Switch to dark mode
-      primary: deep orange
-      accent: red
+      primary: blue
+      accent: light blue
 
 extra:
   # Link to open when your logo is clicked
-  homepage: https://alnoda.org
-  host_url: http://localhost
+  homepage: https://docs.alnoda.org
+  host_url: http://docs.alnoda.org
 
 plugins:
   - search

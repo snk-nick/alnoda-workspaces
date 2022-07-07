@@ -3,10 +3,10 @@
 # ===========================================================
 
 nav:
-  - Home: pages/home/home.md
-  - About: README.md
-  - Get started: get-started.md
+  - Home: README.md
+  - My apps: pages/my-apps.md
   - Showcase: showcase.md
+  - Docs: https://mkdocs-magicspace.alnoda.org/
 
 
 # ===========================================================
@@ -49,8 +49,8 @@ theme:
 
 extra:
   # Link to open when your logo is clicked
-  homepage: https://alnoda.org
-  host_url: http://localhost
+  homepage: https://docs.alnoda.org
+  host_url: https://docs.alnoda.org
 
 plugins:
   - search
