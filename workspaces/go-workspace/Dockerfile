@@ -1,26 +1,28 @@
-ARG docker_registry=docker.io/alnoda
-ARG image_tag=2.2
-ARG ruby_global_version=3.1.2
+FROM alnoda/codeserver-workspace:5.0
 
-FROM ${docker_registry}/codeserver-workspace:${image_tag}
-USER root
+RUN wrk install go==1.18.2
 
-COPY ./mkdocs/mkdocs.yml /home/docs/mkdocs.yml 
-
-RUN apt-get -y update \
-    && echo "------------------------------------------------------ go " \
-    && cd /tmp && curl -LO https://go.dev/dl/go1.18.2.linux-amd64.tar.gz \
-    && tar -xvf go1.18.2.linux-amd64.tar.gz -C /usr/local \
-    && rm /tmp/go1.18.2.linux-amd64.tar.gz \
-    && echo "------------------------------------------------------ user" \
-    && find /home -type d | xargs -I{} chown -R abc {} \
-    && find /home -type f | xargs -I{} chown abc {} 
-
-ENV PATH="$PATH:/usr/local/go/bin"
-ENV PATH="$PATH:/root/go/bin"
+# Set global environmental variables 
 ENV PATH="$PATH:/home/abc/go/bin"
+ENV GOPATH="/home/abc/go"
+ENV GOROOT="/home/abc/go"
 
-USER abc
+# Istall extra Go tools
+RUN go install -v github.com/ramya-rao-a/go-outline@latest \
+    && go install -v golang.org/x/tools/gopls@latest \
+    && go install -v golang.org/x/tools/cmd/goimports@latest \
+    && go install -v github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest \
+    && go install -v github.com/stamblerre/gocode@latest
 
+# Install additional codeserver extensions 
+RUN echo "------------------------------------------------------ extensions" \
+    && code-server --install-extension  ms-vscode.Go \
+    && code-server --install-extension  tonsky.theme-alabaster \
+    && code-server --install-extension  CoenraadS.bracket-pair-colorizer-2 
 
+# Change default codeserver theme
+COPY --chown=abc:abc settings.json /home/abc/.local/share/code-server/User/settings.json
 
+# Gonfigure Alnoda workspace
+COPY --chown=abc:abc workspace /tmp/workspace
+RUN wrk build /tmp/workspace && rm -rf /tmp/workspace

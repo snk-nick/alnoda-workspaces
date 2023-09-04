@@ -1,64 +1,139 @@
-<p align="center">
-  <img src="../../img/Alnoda-white.svg" alt="Alnoda logo" width="150">
-</p>   
-
 # Go workspace 
 
-Docker image with Go and browser-based VS-Code version. 
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/bluxmit/alnoda-workspaces/main/workspaces/codeserver-workspace/img/codeserver-collage-sm.jpg" alt="Collage" width="750">
-</p>
-
-## Why this images
-
-1. If you need self-hosted remote development environment.
-2. If you want to be one terminal command away from coding in Go.
+Containerized isolated portable development environment for Go programming language projects.
 
 ## Start
  
 ```
-docker run --name space-1 -d -p 8020-8040:8020-8040 alnoda/go-workspace
+docker run --name space-1 -d -p 8020-8040:8020-8040 --restart=always alnoda/go-workspace
 ```  
 
-and open [localhost:8020](http://localhost:8020) in browser.  
+open [localhost:8020](http://localhost:8020) in browser.  
 
 ## Features
 
 - [Go](https://go.dev/) 
+- [**Code-server**](https://github.com/cdr/code-server) - open source version of popular Visual Studio Code IDE. Codeserver has VS-Code extensions and works in browser. 
+- [**Alnoda workspace features**](https://docs.alnoda.org/)
 
-**Dev tools:**
+## Links
 
-- [**Code-server**](https://github.com/cdr/code-server) - open source version of popular Visual Studio Code IDE. Codeserver has 
-VS-Code extensions and works in browser. 
-- [**Terminal**](https://github.com/tsl0922/ttyd) - secure browser-based terminal.
-- [**FileBrowser**](https://github.com/filebrowser/filebrowser)  - manage files and folders inside the workspace, and exchange data between local environment and the workspace
-- [**Cronicle**](https://github.com/jhuckaby/Cronicle)  - task scheduler and runner, with a web based front-end UI. It handles both scheduled, repeating and on-demand jobs, targeting any number of worker servers, with real-time stats and live log viewer.
-- [**Static File Server**](https://github.com/vercel/serve) - view any static html sites as easy as if you do it on your local machine. Serve static websites easily.
-- [**Ungit**](https://github.com/FredrikNoren/ungit) - rings user friendliness to git without sacrificing the versatility of it.
-- [**MkDocs**](https://squidfunk.github.io/mkdocs-material/)  - create awesome documentation for your project with only markdown. 
-- [**Midnight Commander**](https://midnight-commander.org/)  - Feature rich visual file manager with internal text viewer and editor. 
-- [**Process Monitor**](https://htop.dev/)  - Monitor running process and resource utilization. 
-- Quicklaunch UI with getting started tutorial
+[__Alnoda docs__](https://docs.alnoda.org/)    
+[__Alnoda Hub__](https://alnoda.org)  
 
-Image is built from **Ubuntu 20.4** with the additional CLI apps
+## Example: hello world
 
-- [Zsh](https://www.zsh.org/), [Oh my Zsh](https://ohmyz.sh/)
-- Python 3, Pip 
-- Node/nodeenv
-- curl, wget, telnet, jq
-- **Git:** git, git-flow, lazygit 
-- **File browsers:** mc, xplr
-- **Text editors:** nano, vim, mcedit
-- **System monitors:** ncdu, htop, glances, vizex
-- **Process Control:** supervisord
-- **Job scheduler:** cron
+Check Go version 
 
-## Docs
+```
+go version
+```
 
-See our guides
+Create new Go project
 
-- [**getting started**](https://docs.alnoda.org/get-started/common-features/)
-- [**workspace tutorial**](https://docs.alnoda.org/go-workspace/tutorial/)
-- [**workspace docs**](https://docs.alnoda.org/go-workspace/)
-- [**project docs**](https://docs.alnoda.org/)
+```
+mkdir myProject/
+cd myProject
+go mod init myProject
+```
+
+Create file `main.go`
+
+```
+package main
+import "fmt"
+func main() {
+  fmt.Println("Hello Go")
+}
+```
+
+Then test it using the go run command 
+
+```
+go run main.go 
+```
+
+## Dependencies
+
+Go Modules - Go’s dependency management system that makes dependency version information explicit and easier to manage.  
+
+Create new Go project
+
+```
+mkdir simpleserver/
+cd simpleserver
+go mod init simpleserver
+```
+
+Adding a remote module as a dependency manually:
+
+```
+go get github.com/spf13/cobra@latest
+```
+
+Check `go.mod` file 
+
+```
+cat go.mod
+```
+
+Create file `main.go`  
+
+```
+package main
+import "github.com/gin-gonic/gin"
+
+func main() {
+    r := gin.Default()
+    r.GET("/", func(c *gin.Context) {
+        c.JSON(200, gin.H{
+                "message": "pong",
+        })
+    })
+    r.Run() 
+}
+```
+
+To add module requirements and sums execute
+
+```
+go mod tidy
+```
+
+## Run, build and install
+
+- `go run` - to quickly test your go code and to check the output. But internally it compiles your code and builds an executable binary in a temporary location, launches that temp exe-file and finally cleans it when your app exits.
+- `go build` - compile and builds executable in current directory.
+- `go install` - will compile and move the executable to executable directory included in $PATH, so that you can run this executable from any path on the terminal. 
+
+Run the simple server with 
+
+```
+export PORT=8026
+go run main.go
+```
+
+Open Quickstart page, go to "My apps" and use port 8026 shortcut to open your web app
+
+Build executable locally 
+
+```
+go build
+```
+
+This will create an executable `simpleserver` in the same folder.   
+
+Build and move to executable folder 
+
+```
+go install
+```
+
+Now you can execute anywhere in terminal 
+
+```
+export PORT=8026
+simpleserver
+```
+
+and the server will start

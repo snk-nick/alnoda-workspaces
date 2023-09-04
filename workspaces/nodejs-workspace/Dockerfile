@@ -1,27 +1,28 @@
+FROM alnoda/codeserver-workspace:5.0
 
-ARG docker_registry=docker.io/alnoda
-ARG image_tag=2.2
+RUN wrk install nvm==0.39.1
 
-FROM ${docker_registry}/codeserver-workspace:${image_tag}
-USER root
+ENV NVM_DIR="/home/abc/.nvm" \
+    NODE_VERSION="18.9.0"
 
-COPY ./mkdocs/mkdocs.yml /home/docs/mkdocs.yml 
+RUN echo "------------------------------------------------------ node, npm" \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
 
-RUN apt-get -y update \
-    && echo "------------------------------------------------------ system nodejs-18" \
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - \
-    && apt-get install -y nodejs \
-    && npm install --global yarn \
-    && echo "------------------------------------------------------ nvm (root)" \
-    && wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
-    && echo 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"' >> /root/.zshrc \
-    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /root/.zshrc \
-    && echo "------------------------------------------------------ user" \
-    && find /home -type d | xargs -I{} chown -R abc {} 
-    
-USER abc
+# Install additional Nodejs-specific codeserver extensions 
+RUN echo "------------------------------------------------------ extensions" \
+    && code-server --install-extension  bradlc.vscode-tailwindcss \
+    && code-server --install-extension  anseki.vscode-color \
+    && code-server --install-extension  christian-kohler.npm-intellisense \
+    && code-server --install-extension  xabikos.JavaScriptSnippets \
+    && code-server --install-extension  dbaeumer.vscode-eslint \
+    && code-server --install-extension  kumar-harsh.graphql-for-vscode
 
-RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
-    && echo 'export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"' >> /home/abc/.zshrc \
-    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /home/abc/.zshrc
+# Change default codeserver theme
+COPY --chown=abc:abc settings.json /home/abc/.local/share/code-server/User/settings.json
 
+# Gonfigure Alnoda workspace
+COPY --chown=abc:abc workspace /tmp/workspace
+RUN wrk build /tmp/workspace && rm -rf /tmp/workspace

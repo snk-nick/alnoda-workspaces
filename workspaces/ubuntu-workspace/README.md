@@ -1,10 +1,9 @@
-<p align="center">
-  <img src="../../img/Alnoda-white.svg" alt="Alnoda logo" width="150">
-</p>  
 
 # Ubuntu workspace
-Containerized Linux terminal environment. Essentially Ubuntu 20.04 docker image extended with typical console apps, such as Git, 
-file browsers and system monitors.
+
+Containerized Linux terminal environment.  
+
+Essentially Ubuntu 20.04 docker image extended with typical console apps, such as Git, file browsers and system monitors.
 
 Start
 
@@ -26,11 +25,12 @@ docker exec -it --user=root space-1 /bin/zsh
     - Node/nodeenv
     - curl, wget, telnet, jq
     - **Git:** git, git-flow, lazygit 
-    - **File browsers:** mc, xplr
+    - **File browsers:** mc
     - **Text editors:** nano, vim, mcedit
     - **System monitors:** ncdu, htop, glances, vizex
     - **Process Control:** supervisord
     - **Job scheduler:** cron
+    - **Terminal multiplexer:** tmux 
 
 ## Why this image
 

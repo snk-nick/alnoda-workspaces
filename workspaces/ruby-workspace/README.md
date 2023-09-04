@@ -1,24 +1,11 @@
-<p align="center">
-  <img src="../../img/Alnoda-white.svg" alt="Alnoda logo" width="150">
-</p>  
-
 # Ruby workspace 
 
-Docker image with Ruby and browser-based VS-Code version. 
-
-<p align="center">
-  <img src="../codeserver-workspace/img/codeserver-collage-sm.jpg" alt="Collage" width="750">
-</p>
-
-## Why this images
-
-1. If you need self-hosted remote development environment.
-2. If you want to be one terminal command away from coding in Ruby.
+Containerized portable isolated development environment for Ruby projects.
 
 ## Start
  
 ```
-docker run --name space-1 -d -p 8020-8040:8020-8040 alnoda/ruby-workspace
+docker run --name space-1 -d -p 8020-8040:8020-8040 --restart=always alnoda/ruby-workspace
 ```  
 
 and open [localhost:8020](http://localhost:8020) in browser.  
@@ -28,38 +15,116 @@ and open [localhost:8020](http://localhost:8020) in browser.
 - [Ruby](https://www.ruby-lang.org/) 
 - [Rbennv](https://github.com/rbenv/rbenv)
 - [Bundler](https://bundler.io/)
+- [**Openvscode workspace features**](https://github.com/bluxmit/alnoda-workspaces/tree/main/workspaces/openvscode-workspace)
 
-**Dev tools:**
+## Links
 
-- [**Code-server**](https://github.com/cdr/code-server) - open source version of popular Visual Studio Code IDE. Codeserver has 
-VS-Code extensions and works in browser. 
-- [**Terminal**](https://github.com/tsl0922/ttyd) - secure browser-based terminal.
-- [**FileBrowser**](https://github.com/filebrowser/filebrowser)  - manage files and folders inside the workspace, and exchange data between local environment and the workspace
-- [**Cronicle**](https://github.com/jhuckaby/Cronicle)  - task scheduler and runner, with a web based front-end UI. It handles both scheduled, repeating and on-demand jobs, targeting any number of worker servers, with real-time stats and live log viewer.
-- [**Static File Server**](https://github.com/vercel/serve) - view any static html sites as easy as if you do it on your local machine. Serve static websites easily.
-- [**Ungit**](https://github.com/FredrikNoren/ungit) - rings user friendliness to git without sacrificing the versatility of it.
-- [**MkDocs**](https://squidfunk.github.io/mkdocs-material/)  - create awesome documentation for your project with only markdown. 
-- [**Midnight Commander**](https://midnight-commander.org/)  - Feature rich visual file manager with internal text viewer and editor. 
-- [**Process Monitor**](https://htop.dev/)  - Monitor running process and resource utilization. 
-- Quicklaunch UI with getting started tutorial
+[__Alnoda docs__](https://docs.alnoda.org/)    
+[__Alnoda Hub__](https://alnoda.org)  
 
-Image is built from **Ubuntu 20.4** with the additional CLI apps
+## Ruby
 
-- [Zsh](https://www.zsh.org/), [Oh my Zsh](https://ohmyz.sh/)
-- Python 3, Pip 
-- Node/nodeenv
-- curl, wget, telnet, jq
-- **Git:** git, git-flow, lazygit 
-- **File browsers:** mc, xplr
-- **Text editors:** nano, vim, mcedit
-- **System monitors:** ncdu, htop, glances, vizex
-- **Process Control:** supervisord
-- **Job scheduler:** cron
+Open terminal, and check Ruby version 
 
-## Docs
+```
+ruby -v
+```
 
-See our guides on 
+Install Rails - a web application development framework written in the Ruby programming language. 
 
-- [**getting started**](https://docs.alnoda.org/get-started/common-features/)
-- [**workspace tutorial**](https://docs.alnoda.org/ruby-workspace/tutorial/) 
-- [**project docs**](https://docs.alnoda.org/)
+```
+gem install rails
+```
+
+Check version 
+
+```
+rails --version
+```
+
+## Hello world
+
+Open VS-code, and create file `http_server.rb` 
+
+```rb
+# http_server.rb
+require 'socket'
+server = TCPServer.new 8026
+ 
+while session = server.accept
+  request = session.gets
+  puts request
+ 
+  session.print "HTTP/1.1 200\r\n" # 1
+  session.print "Content-Type: text/html\r\n" # 2
+  session.print "\r\n" # 3
+  session.print "Hello world! The time is #{Time.now}" #4
+ 
+  session.close
+end
+```
+
+Now open terminal, and execute to serve simple server 
+
+```
+ruby http_server.rb
+```
+
+In workspace UI go to "My apps" and use port 8026 shortcut to open your web app
+
+
+## Bundler
+
+[Bundler](https://bundler.io/) provides a consistent environment for Ruby projects by tracking and installing 
+the exact gems and versions that are needed. 
+
+Create file `Gemfile` with the following content 
+
+```
+source 'https://rubygems.org'
+gem 'nokogiri'
+gem 'rack', '~> 2.0.1'
+gem 'rspec'
+```
+
+Install all of the required gems 
+
+```
+bundle install
+```
+
+## Rbenv
+
+Use [rbenv](https://github.com/rbenv/rbenv) to pick a Ruby version for your application and guarantee 
+that your development environment matches production. 
+
+List available versions, and install another one 
+
+```
+rbenv install --list
+rbenv install 3.0.4
+```
+
+Lists all Ruby versions known to rbenv, and shows an asterisk next to the currently active version. 
+
+```
+rbenv versions
+```
+
+__global environment__  
+
+
+Change global Ruby (for all folders)
+
+```
+rbenv global 3.0.4
+```
+
+__local environment (specific folder)__  
+
+Chose local Ruby environment for this specific folder
+
+```
+rbenv local 3.0.4
+```
+

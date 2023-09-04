@@ -1,14 +1,6 @@
-<p align="center">
-  <img src="../../img/Alnoda-white.svg" alt="Alnoda logo" width="150">
-</p>  
+# Erlang-elixir workspace 
 
-# Erlang-Elixir workspace 
-
-Docker image with Erlang, Elixir and browser-based VS-Code version.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/bluxmit/alnoda-workspaces/main/workspaces/codeserver-workspace/img/codeserver-collage-sm.jpg" alt="Collage" width="750">
-</p>
+Containerized isolated development environment for Erlang and Elixir programming languages. 
 
 ## Why this images
 
@@ -18,7 +10,7 @@ Docker image with Erlang, Elixir and browser-based VS-Code version.
 ## Start
  
 ```
-docker run --name space-1 -d -p 8020-8040:8020-8040 alnoda/erlang-elixir-workspace
+docker run --name space-1 -d -p 8020-8040:8020-8040 --restart=always alnoda/erlang-elixir-workspace
 ```  
 
 and open [localhost:8020](http://localhost:8020) in browser.  
@@ -29,40 +21,96 @@ and open [localhost:8020](http://localhost:8020) in browser.
 - [Elixir](http://elixir-lang.org/)
 - [Kerl](https://github.com/kerl/kerl) - easy building and installing of Erlang/OTP instances.
 - [Kiex](https://github.com/taylor/kiex) - allows you to easily build and switch between different Elixir versions.
+- [**Java workspace features**](https://github.com/bluxmit/alnoda-workspaces/tree/main/workspaces/java-workspace)
 
-**Dev tools:**
+## Links
 
-- [**Code-server**](https://github.com/cdr/code-server) - open source version of popular Visual Studio Code IDE. Codeserver has 
-VS-Code extensions and works in browser. 
-- [**Terminal**](https://github.com/tsl0922/ttyd) - secure browser-based terminal.
-- [**FileBrowser**](https://github.com/filebrowser/filebrowser)  - manage files and folders inside the workspace, and exchange data between local environment and the workspace
-- [**Cronicle**](https://github.com/jhuckaby/Cronicle)  - task scheduler and runner, with a web based front-end UI. It handles both scheduled, repeating and on-demand jobs, targeting any number of worker servers, with real-time stats and live log viewer.
-- [**Static File Server**](https://github.com/vercel/serve) - view any static html sites as easy as if you do it on your local machine. Serve static websites easily.
-- [**Ungit**](https://github.com/FredrikNoren/ungit) - rings user friendliness to git without sacrificing the versatility of it.
-- [**MkDocs**](https://squidfunk.github.io/mkdocs-material/)  - create awesome documentation for your project with only markdown. 
-- [**Midnight Commander**](https://midnight-commander.org/)  - Feature rich visual file manager with internal text viewer and editor. 
-- [**Process Monitor**](https://htop.dev/)  - Monitor running process and resource utilization. 
-- Quicklaunch UI with getting started tutorial
+[__Alnoda docs__](https://docs.alnoda.org/)    
+[__Alnoda Hub__](https://alnoda.org)  
 
-Image is built from **Ubuntu 20.4** with the additional CLI apps
+## Erlang 
 
-- [Zsh](https://www.zsh.org/), [Oh my Zsh](https://ohmyz.sh/)
-- Python 3, Pip 
-- Node/nodeenv
-- curl, wget, telnet, jq
-- **Git:** git, git-flow, lazygit 
-- **File browsers:** mc, xplr
-- **Text editors:** nano, vim, mcedit
-- **System monitors:** ncdu, htop, glances, vizex
-- **Process Control:** supervisord
-- **Job scheduler:** cron
+### Erlang shell 
 
-## Docs
+Erlang shell is used for testing of expressions. Start the Erlang shell from a command prompt with the command `erl`   
 
-See our guides on 
+having started shell, evaluate the following expressions 
 
-- [**getting started**](https://docs.alnoda.org/get-started/common-features/)
-- [**workspace tutorial**](https://docs.alnoda.org/erlang-elixir-workspace/tutorial/) 
-- [**project docs**](https://docs.alnoda.org/)
+```
+2 + 5.
+(42 + 77) * 66 / 3.
 
+Str = "abcd".
+L = length(Str).
+```
 
+### Hello world
+
+Go to the Quickstart page, open VS-Code and create file `hello.erl` with the following code 
+
+```
+-module(hello).
+-export([hello_world/0]).
+
+hello_world() ->
+  io:format("Hello, World!~n", []).
+```
+
+Now open Terminal, start Erlang shell with `erl` and execute 
+
+```
+c(hello).
+```
+
+## Elixir
+
+### Elixir shell 
+
+`iex` is a command which stands for Interactive Elixir. 
+
+Openn terminal, start interactive Elixir shell with `iex` and evaluate
+
+```
+40 + 8
+"hello" <> " world"
+```
+
+### Scripts 
+
+Open IDE and create file `hello.exs` with the following code 
+
+```
+IO.puts("Hello world from Elixir")
+```
+
+In terminal execute 
+
+```
+elixir hello.exs
+```
+
+### Manage Elixir versions with Kiex 
+
+List installed versions
+
+```
+kiex list
+```
+
+List known releases
+
+```
+kiex list releases
+```
+
+Install a known release
+
+```
+kiex install 1.13.0
+```
+
+Use specific elixir version
+
+```
+kiex use 1.13.0
+```

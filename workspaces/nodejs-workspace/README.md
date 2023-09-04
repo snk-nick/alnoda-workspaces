@@ -1,24 +1,11 @@
-<p align="center">
-  <img src="../../img/Alnoda-white.svg" alt="Alnoda logo" width="150">
-</p>  
-
 # Node.js workspace 
 
-Docker image with Node.js and browser-based VS-Code version.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/bluxmit/alnoda-workspaces/main/workspaces/codeserver-workspace/img/codeserver-collage-sm.jpg" alt="Collage" width="750">
-</p>
-
-## Why this images
-
-1. If you need self-hosted development environment.
-2. If you want to be one terminal command away from coding in JavaScript.
+Browser-based portable and containerized development environment for Javascript Node.js projects
 
 ## Start
  
 ```
-docker run --name space-1 -d -p 8020-8040:8020-8040 alnoda/nodejs-workspace
+docker run --name space-1 -d -p 8020-8040:8020-8040 --restart=always alnoda/nodejs-workspace
 ```  
 
 open [localhost:8020](http://localhost:8020) in browser.  
@@ -30,39 +17,106 @@ open [localhost:8020](http://localhost:8020) in browser.
 - Yarn
 - [Nvm](https://github.com/nvm-sh/nvm)
 - [Nodeenv](https://pypi.org/project/nodeenv/)
+- [*Codeserver workspace features*](https://github.com/bluxmit/alnoda-workspaces/tree/main/workspaces/codeserver-workspace)
 
-**Dev tools:**
+## Links
 
-- [**Code-server**](https://github.com/cdr/code-server) - open source version of popular Visual Studio Code IDE. Codeserver has 
-VS-Code extensions and works in browser. 
-- [**Terminal**](https://github.com/tsl0922/ttyd) - secure browser-based terminal.
-- [**FileBrowser**](https://github.com/filebrowser/filebrowser)  - manage files and folders inside the workspace, and exchange data between local environment and the workspace
-- [**Cronicle**](https://github.com/jhuckaby/Cronicle)  - task scheduler and runner, with a web based front-end UI. It handles both scheduled, repeating and on-demand jobs, targeting any number of worker servers, with real-time stats and live log viewer.
-- [**Static File Server**](https://github.com/vercel/serve) - view any static html sites as easy as if you do it on your local machine. Serve static websites easily.
-- [**Ungit**](https://github.com/FredrikNoren/ungit) - rings user friendliness to git without sacrificing the versatility of it.
-- [**MkDocs**](https://squidfunk.github.io/mkdocs-material/)  - create awesome documentation for your project with only markdown. 
-- [**Midnight Commander**](https://midnight-commander.org/)  - Feature rich visual file manager with internal text viewer and editor. 
-- [**Process Monitor**](https://htop.dev/)  - Monitor running process and resource utilization. 
-- Quicklaunch UI with getting started tutorial
+[__Alnoda docs__](https://docs.alnoda.org/)    
+[__Alnoda Hub__](https://alnoda.org)  
 
-Image is built from **Ubuntu 20.4** with the additional CLI apps
+## Node.js
 
-- [Zsh](https://www.zsh.org/), [Oh my Zsh](https://ohmyz.sh/)
-- Python 3, Pip 
-- Node/nodeenv
-- curl, wget, telnet, jq
-- **Git:** git, git-flow, lazygit 
-- **File browsers:** mc, xplr
-- **Text editors:** nano, vim, mcedit
-- **System monitors:** ncdu, htop, glances, vizex
-- **Process Control:** supervisord
-- **Job scheduler:** cron
+Open workspace terminal and check Node.js or npm versions 
 
-## Docs
+```
+node -v
+npm -v
+```
 
-See our guides on 
+To start Node.js REPL session simply execute 
 
-- [**getting started**](https://docs.alnoda.org/get-started/common-features/)
-- [**workspace tutorial**](https://docs.alnoda.org/nodejs-workspace/) 
-- [**project docs**](https://docs.alnoda.org/)
+```
+node
+```
+
+## Nvm
+
+Use another version of Node.js
+
+```
+nvm install 16.0.0
+nvm use 16.0.0
+```
+
+## Npm
+
+Check npm version 
+
+```
+npm -v
+```
+
+Install latest version of npm
+
+```
+npm install -g npm@latest
+```
+
+## Yarn
+
+[Yarn](https://yarnpkg.com/) is a package manager for Node. js that focuses on speed, security, and consistency. 
+It was originally created to address some issues with the popular NPM package manager.
+
+```
+npm install --global yarn
+yarn --version
+```
+
+## Nodeenv
+
+Node.js virtual environment - a tool to create isolated node.js environments.
+
+It creates an environment that has its own installation directories, that doesn’t share libraries with other node.js virtual environments.  
+
+Create folder and vrtual ennvironment in it
+
+```
+mkdir /home/project/venv-test 
+cd /home/project/venv-test
+nodeenv --node=12.18.3 env && . env/bin/activate 
+```
+
+Check Nnode.js version
+
+```
+node -v
+npm -v
+```
+
+## Simple example
+
+Clone example project 
+
+```
+cd /home/project
+git clone https://github.com/contentful/the-example-app.nodejs.git 
+cd the-example-app.nodejs
+```
+
+Install the dependencies
+
+```
+npm install
+```
+
+Start app
+
+```
+export PORT=8026
+npm run start:dev
+```
+
+Open Quickstart page, go to "My apps" and use port 8026 shortcut to open your web app
+
+
 

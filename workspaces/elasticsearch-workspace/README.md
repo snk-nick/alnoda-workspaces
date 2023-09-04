@@ -1,9 +1,6 @@
-<p align="center">
-  <img src="../../img/Alnoda-white.svg" alt="Alnoda logo" width="150">
-</p>  
-
 # Elasticsearch workspace
-Several Elasticsearch CLI tools in a containerized dev/admin workspace.
+
+Alnoda workspace with toolset to interact, manage and administer Opensearch and Elasticsearch cluster.
 
 ## Why this images
 
@@ -15,51 +12,42 @@ migrate to other clusters, export and import Elasticsearch data to S3.
 ## Start
  
 ```
-docker run --name elawid-1 -d -p 8020-8040:8020-8040 alnoda/elasticsearch-workspace
+docker run --name elawid-1 -d -p 8020-8040:8020-8040 --restart=always alnoda/elasticsearch-workspace
 ```  
 
 and open [localhost:8020](http://localhost:8020) in browser.  
 
 ## Features
 
-**Elasticsearch CLI tools**
-
 - [elasticdump](https://github.com/elasticsearch-dump/elasticsearch-dump) - awesome tool for moving and saving indices.
 - [esbulk](https://github.com/miku/esbulk) - fast parallel command line bulk loading utility for Elasticsearch. 
 - [vulcanizer](https://github.com/github/vulcanizer) - cli for interacting with an Elasticsearch cluster.
+- [*Codeserver workspace features*](https://github.com/bluxmit/alnoda-workspaces/tree/main/workspaces/codeserver-workspace)
 
-**Dev tools:**
+## Links
 
-- [**Eclipse Theia**](https://theia-ide.org/docs/) - open source version of popular Visual Studio Code IDE. Theia is trully open-source, has 
-VS-Code extensions and works in browser. This means it can run inside a docker container on local machine or in cloud. A lot of beautiful color themes and many common plugins are already installed to save time.  
-- [**Terminal**](https://github.com/tsl0922/ttyd) - secure browser-based terminal.
-- [**FileBrowser**](https://github.com/filebrowser/filebrowser)  - manage files and folders inside the workspace, and exchange data between local environment and the workspace
-- [**Cronicle**](https://github.com/jhuckaby/Cronicle)  - task scheduler and runner, with a web based front-end UI. It handles both scheduled, repeating and on-demand jobs, targeting any number of worker servers, with real-time stats and live log viewer.
-- [**Static File Server**](https://github.com/vercel/serve) - view any static html sites as easy as if you do it on your local machine. Serve static websites easily.
-- [**Ungit**](https://github.com/FredrikNoren/ungit) - rings user friendliness to git without sacrificing the versatility of it.
-- [**MkDocs**](https://squidfunk.github.io/mkdocs-material/)  - create awesome documentation for your project with only markdown. 
-- [**Midnight Commander**](https://midnight-commander.org/)  - Feature rich visual file manager with internal text viewer and editor. 
-- [**Process Monitor**](https://htop.dev/)  - Monitor running process and resource utilization. 
-- Quicklaunch UI with getting started tutorial
+[__Alnoda docs__](https://docs.alnoda.org/)    
+[__Alnoda Hub__](https://alnoda.org)  
 
-Image is built from **Ubuntu 20.4** with the additional CLI apps
+## vulcanizer
 
-- [Zsh](https://www.zsh.org/), [Oh my Zsh](https://ohmyz.sh/)
-- Python 3, Pip 
-- Node/nodeenv
-- curl, wget, telnet, jq
-- **Git:** git, git-flow, lazygit 
-- **File browsers:** mc, xplr
-- **Text editors:** nano, vim, mcedit
-- **System monitors:** ncdu, htop, glances, vizex
-- **Process Control:** supervisord
-- **Job scheduler:** cron
+Check cluster nodes and shards
 
-## Docs
+```
+vulcanizer --host es01 nodes
+vulcanizer --host es01 shards
+```
 
-See our guides
+## elasticdump
 
-- [**getting started**](https://docs.alnoda.org/get-started/common-features/)
-- [**workspace tutorial**](https://docs.alnoda.org/elasticsearch-workspace/tutorial/)
-- [**workspace docs**](https://docs.alnoda.org/elasticsearch-workspace/)
-- [**project docs**](https://docs.alnoda.org/)
+Use elasticdump to export index `kibana_sample_data_ecommerce` (from eCommerce sample dataset) to S3 
+
+```
+elasticdump \
+  --s3AccessKeyId "${access_key_id}" \
+  --s3SecretAccessKey "${access_key_secret}" \
+  --input=http://es01:9200/kibana_sample_data_ecommerce \
+  --output "s3://${bucket_name}/kibana_sample_data_ecommerce.json"
+```
+
+

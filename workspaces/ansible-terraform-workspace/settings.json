@@ -1,5 +1,3 @@
 {
-    "terminal.integrated.shell.linux": "/bin/zsh",
-    "workbench.colorTheme": "SynthWave '84",
-    "git-graph.maxDepthOfRepoSearch": 3
+    "workbench.colorTheme": "SynthWave '84"
 }

@@ -1,34 +1,21 @@
-ARG docker_registry=docker.io/alnoda
-ARG image_tag=2.2-17
+FROM alnoda/java-workspace:5.0-17
 
-FROM ${docker_registry}/java-workspace:${image_tag}
-USER root
-
-COPY ./mkdocs/mkdocs.yml /home/docs/mkdocs.yml
-
-RUN apt-get -y update \
-    && echo "------------------------------------------------------ Erlang requirements" \
-    && apt-get -y install build-essential autoconf libncurses5-dev openssl libssl-dev fop xsltproc unixodbc-dev \
-    && echo "------------------------------------------------------ Kerl" \
-    && cd /tmp && curl -O https://raw.githubusercontent.com/kerl/kerl/master/kerl \
-    && chmod a+x kerl \
-    && mv /tmp/kerl /usr/bin/ \
-    && kerl update releases \
-    && echo "------------------------------------------------------ user" \
-    && find /home -type d | xargs -I{} chown -R abc {} \
-    && find /home -type f | xargs -I{} chown abc {} 
-
-USER abc
-
-RUN echo "------------------------------------------------------ Erlang/OTP (user) " \
-    && kerl build 25.0 25.0 \
-    && kerl install 25.0 /home/abc/erlang/25.0 \
-    && export PATH="$PATH:/home/abc/erlang/25.0/bin" \
-    && echo "------------------------------------------------------ Kiex, Elixir (user) " \
-    && curl -sSL https://raw.githubusercontent.com/taylor/kiex/master/install | bash -s \
-    && export "PATH=$PATH:/home/abc/.kiex/bin" \
-    && kiex install 1.13.4 
-
+RUN wrk install erlang==25.0
 ENV PATH="$PATH:/home/abc/erlang/25.0/bin"
+RUN wrk install elixir==1.13.4
 ENV PATH="$PATH:/home/abc/.kiex/bin"
 ENV PATH="$PATH:/home/abc/.kiex/elixirs/elixir-1.13.4/bin"
+
+# Install codeserver extensions 
+RUN echo "------------------------------------------------------ common extensions" \
+    && code-server --install-extension  erlang-ls.erlang-ls \
+    && code-server --install-extension  elixir-lsp.elixir-ls \
+    && code-server --install-extension  pantajoe.vscode-elixir-credo \
+    && code-server --install-extension  lakshitsomani.best-themes-redefined 
+
+# Set default codeserver theme
+COPY --chown=abc:abc settings.json /home/abc/.local/share/code-server/User/settings.json
+
+# Gonfigure Alnoda workspace
+COPY --chown=abc:abc workspace /tmp/workspace
+RUN wrk build /tmp/workspace && rm -rf /tmp/workspace
